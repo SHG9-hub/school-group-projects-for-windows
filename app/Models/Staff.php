@@ -10,6 +10,8 @@ class Staff extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $table = 'staffs';
+
     protected $fillable = [
         'name',
         'email',
