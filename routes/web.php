@@ -22,6 +22,31 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Static pages
+Route::get('/about', function () {
+    return view('pages.about');
+})->name('about');
+
+Route::get('/services', function () {
+    return view('pages.services');
+})->name('services');
+
+Route::get('/access', function () {
+    return view('pages.access');
+})->name('access');
+
+Route::get('/testimonials', function () {
+    return view('pages.testimonials');
+})->name('testimonials');
+
+Route::get('/faq', function () {
+    return view('pages.faq');
+})->name('faq');
+
+Route::get('/news', function () {
+    return view('pages.news');
+})->name('news');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
