@@ -182,6 +182,50 @@
             </div>
         </section>
 
+        <!-- 休診日のお知らせ -->
+        @if($upcomingHolidays->count() > 0)
+        <section class="py-16 bg-red-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-8">
+                    <h3 class="text-3xl font-bold text-red-800 mb-4">休診日のお知らせ</h3>
+                    <p class="text-red-600">以下の日程は休診とさせていただきます</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach($upcomingHolidays as $holiday)
+                        <div class="bg-white rounded-xl p-6 border border-red-200 shadow-sm">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a4 4 0 118 0v4m-4 8a4 4 0 01-4-4v-4h8v4a4 4 0 01-4 4z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-gray-800">
+                                        {{ $holiday->holiday_date->format('n月j日') }}（{{ $holiday->holiday_date->format('D') }}）
+                                    </h4>
+                                    <p class="text-sm text-red-600">休診日</p>
+                                </div>
+                            </div>
+                            @if($holiday->description)
+                                <p class="text-gray-600 text-sm">
+                                    理由：{{ $holiday->description }}
+                                </p>
+                            @endif
+                            <p class="text-xs text-gray-500 mt-2">
+                                緊急時は夜間救急病院へご連絡ください
+                            </p>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="text-center mt-8">
+                    <a href="/news" class="text-red-600 hover:text-red-700 font-semibold">
+                        その他のお知らせを見る →
+                    </a>
+                </div>
+            </div>
+        </section>
+        @endif
+
         <!-- 予約・お問い合わせ -->
         <section class="py-16 bg-white">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

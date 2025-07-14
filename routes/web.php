@@ -19,7 +19,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // 今後の休診日を取得（今日以降、3件まで）
+    $upcomingHolidays = \App\Models\Holiday::where('holiday_date', '>=', now()->toDateString())
+        ->orderBy('holiday_date', 'asc')
+        ->take(3)
+        ->get();
+    
+    return view('welcome', compact('upcomingHolidays'));
 });
 
 // Static pages
@@ -44,7 +50,17 @@ Route::get('/faq', function () {
 })->name('faq');
 
 Route::get('/news', function () {
-    return view('pages.news');
+    // 今後の休診日を取得（今日以降の日付）
+    $upcomingHolidays = \App\Models\Holiday::where('holiday_date', '>=', now()->toDateString())
+        ->orderBy('holiday_date', 'asc')
+        ->get();
+    
+    // 最近追加された休診日（過去30日以内に登録されたもの）
+    $recentHolidays = \App\Models\Holiday::where('created_at', '>=', now()->subDays(30))
+        ->orderBy('created_at', 'desc')
+        ->get();
+    
+    return view('pages.news', compact('upcomingHolidays', 'recentHolidays'));
 })->name('news');
 
 Route::get('/dashboard', function () {

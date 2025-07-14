@@ -65,14 +65,40 @@
                     </div>
                     <h2 class="text-xl font-bold text-red-800">重要なお知らせ</h2>
                 </div>
-                <div class="bg-white rounded-xl p-6 border border-red-200">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-2">年末年始の診療について</h3>
-                    <p class="text-gray-600 mb-4">
-                        12月29日（日）〜1月3日（金）は休診とさせていただきます。緊急時は夜間救急病院（03-XXXX-XXXX）までご連絡ください。
-                        1月4日（土）より通常診療を開始いたします。
-                    </p>
-                    <span class="text-sm text-red-600 font-semibold">掲載日：2024年12月15日</span>
-                </div>
+
+                @if($upcomingHolidays->count() > 0)
+                    <!-- 動的な休診日のお知らせ -->
+                    <div class="space-y-4">
+                        @foreach($upcomingHolidays->take(3) as $holiday)
+                            <div class="bg-white rounded-xl p-6 border border-red-200">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">
+                                    {{ $holiday->holiday_date->format('n月j日') }}（{{ $holiday->holiday_date->format('D') }}）は休診日です
+                                </h3>
+                                <p class="text-gray-600 mb-4">
+                                    @if($holiday->description)
+                                        {{ $holiday->description }}のため、休診とさせていただきます。
+                                    @else
+                                        休診とさせていただきます。
+                                    @endif
+                                    緊急時は夜間救急病院（03-XXXX-XXXX）までご連絡ください。
+                                </p>
+                                <span class="text-sm text-red-600 font-semibold">
+                                    掲載日：{{ $holiday->created_at->format('Y年n月j日') }}
+                                </span>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <!-- 固定のお知らせ（休診日がない場合） -->
+                    <div class="bg-white rounded-xl p-6 border border-red-200">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">年末年始の診療について</h3>
+                        <p class="text-gray-600 mb-4">
+                            12月29日（日）〜1月3日（金）は休診とさせていただきます。緊急時は夜間救急病院（03-XXXX-XXXX）までご連絡ください。
+                            1月4日（土）より通常診療を開始いたします。
+                        </p>
+                        <span class="text-sm text-red-600 font-semibold">掲載日：2024年12月15日</span>
+                    </div>
+                @endif
             </div>
         </section>
 
@@ -80,6 +106,45 @@
         <section class="py-16 bg-white">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="space-y-8">
+                    <!-- 動的に生成される休診日のお知らせ -->
+                    @foreach($recentHolidays as $holiday)
+                        <article class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center">
+                                    <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded-full mr-3">
+                                        お休み
+                                    </span>
+                                    <span class="text-sm text-gray-500">{{ $holiday->created_at->format('Y年n月j日') }}</span>
+                                </div>
+                                <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a4 4 0 118 0v4m-4 8a4 4 0 01-4-4v-4h8v4a4 4 0 01-4 4z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">
+                                {{ $holiday->holiday_date->format('n月j日') }}（{{ $holiday->holiday_date->format('D') }}）休診のお知らせ
+                            </h3>
+                            <p class="text-gray-600 mb-4">
+                                {{ $holiday->holiday_date->format('Y年n月j日') }}（{{ $holiday->holiday_date->format('D') }}）は、
+                                @if($holiday->description)
+                                    {{ $holiday->description }}
+                                @else
+                                    院内都合
+                                @endif
+                                のため休診とさせていただきます。
+                                緊急時は夜間救急病院（03-XXXX-XXXX）までご連絡ください。
+                                ご迷惑をおかけいたしますが、よろしくお願いいたします。
+                            </p>
+                            @if($holiday->description)
+                                <div class="bg-yellow-50 rounded-lg p-4">
+                                    <p class="text-yellow-800 text-sm font-semibold">
+                                        理由：{{ $holiday->description }}
+                                    </p>
+                                </div>
+                            @endif
+                        </article>
+                    @endforeach
                     <!-- お知らせ1 -->
                     <article class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                         <div class="flex items-start justify-between mb-4">
