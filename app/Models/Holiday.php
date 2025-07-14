@@ -14,10 +14,7 @@ class Holiday extends Model
         'description',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'holiday_date' => 'date',
-        ];
-    }
+    protected $casts = [
+        'holiday_date' => 'date',
+    ];
 }

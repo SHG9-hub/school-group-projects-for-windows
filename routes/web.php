@@ -30,6 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    // Customer reservations
+    Route::resource('reservations', \App\Http\Controllers\ReservationController::class);
 });
 
 // Admin Routes
@@ -48,5 +51,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('holidays', HolidayController::class);
     });
 });
+
+// API Routes for AJAX
+Route::get('/api/available-slots', [\App\Http\Controllers\Api\AvailabilityController::class, 'getAvailableSlots']);
+Route::get('/api/calendar-data', [\App\Http\Controllers\Api\AvailabilityController::class, 'getCalendarData']);
 
 require __DIR__.'/auth.php';

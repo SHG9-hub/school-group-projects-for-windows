@@ -15,12 +15,9 @@ class Reservation extends Model
         'reservation_datetime',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'reservation_datetime' => 'datetime',
-        ];
-    }
+    protected $casts = [
+        'reservation_datetime' => 'datetime',
+    ];
 
     public function user(): BelongsTo
     {
