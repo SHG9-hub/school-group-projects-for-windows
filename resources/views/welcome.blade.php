@@ -44,8 +44,8 @@
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     @auth
-                        <a href="{{ route('reservations.calendar') }}" class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors">
-                            予約する
+                        <a href="{{ route('reservations.index') }}" class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors">
+                            予約管理
                         </a>
                     @else
                         <a href="{{ route('login') }}" class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors">
@@ -235,8 +235,8 @@
                         <h4 class="text-xl font-semibold text-gray-800 mb-4">オンライン予約</h4>
                         <p class="text-gray-600 mb-6">24時間いつでも予約が可能です。<br>会員登録でさらに便利にご利用いただけます。</p>
                         @auth
-                            <a href="{{ route('reservations.calendar') }}" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg inline-block transition-colors">
-                                予約カレンダーへ
+                            <a href="{{ route('reservations.index') }}" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg inline-block transition-colors">
+                                予約管理へ
                             </a>
                         @else
                             <a href="{{ route('register') }}" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg inline-block transition-colors">
