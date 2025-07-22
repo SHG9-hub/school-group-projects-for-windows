@@ -29,9 +29,9 @@
                         <!-- 予約日 -->
                         <div class="mb-6">
                             <label for="reservation_date" class="block text-sm font-medium text-gray-700">予約日</label>
-                            <input type="date" name="reservation_date" id="reservation_date" value="{{ old('reservation_date') }}" 
-                                   min="{{ date('Y-m-d') }}"
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <input type="text" name="reservation_date" id="reservation_date" value="{{ old('reservation_date') }}" 
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                   placeholder="日付を選択してください">
                             <x-input-error :messages="$errors->get('reservation_date')" class="mt-2" />
                         </div>
 
@@ -68,4 +68,29 @@
             </div>
         </div>
     </div>
+
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            flatpickr("#reservation_date", {
+                locale: "ja",
+                dateFormat: "Y-m-d",
+                minDate: "today",
+                altInput: true,
+                altFormat: "Y年m月d日",
+                disable: [
+                    // 日曜日を無効にする
+                    function(date) {
+                        return date.getDay() === 0;
+                    }
+                ]
+            });
+        });
+    </script>
 </x-admin-layout>
