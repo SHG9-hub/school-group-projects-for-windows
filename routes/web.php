@@ -94,7 +94,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 // API Routes for AJAX
-Route::get('/api/available-slots', [\App\Http\Controllers\Api\AvailabilityController::class, 'getAvailableSlots']);
-Route::get('/api/calendar-data', [\App\Http\Controllers\Api\AvailabilityController::class, 'getCalendarData']);
+Route::get('/api/holidays', function() {
+    return \App\Models\Holiday::where('holiday_date', '>=', now()->toDateString())
+        ->pluck('holiday_date')
+        ->map(fn($date) => \Carbon\Carbon::parse($date)->format('Y-m-d'));
+});
 
 require __DIR__.'/auth.php';
