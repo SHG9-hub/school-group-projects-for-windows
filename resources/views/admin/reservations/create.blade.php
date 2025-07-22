@@ -69,28 +69,5 @@
         </div>
     </div>
 
-    <!-- Flatpickr CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
-    <!-- Flatpickr JS -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            flatpickr("#reservation_date", {
-                locale: "ja",
-                dateFormat: "Y-m-d",
-                minDate: "today",
-                altInput: true,
-                altFormat: "Y年m月d日",
-                disable: [
-                    // 日曜日を無効にする
-                    function(date) {
-                        return date.getDay() === 0;
-                    }
-                ]
-            });
-        });
-    </script>
+    <script src="{{ asset('js/reservation-calendar.js') }}"></script>
 </x-admin-layout>
