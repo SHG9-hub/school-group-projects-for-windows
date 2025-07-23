@@ -15,9 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 altFormat: "Y年m月d日 H:i", // 日本語表示フォーマット
                 minDate: "today",          // 今日以降のみ選択可能
                 minuteIncrement: 30,       // 30分刻み
-                defaultHour: 9,            // デフォルト時間: 9時
-                minTime: "09:00",          // 最小時間: 9時
-                maxTime: "17:00",          // 最大時間: 17時
+                defaultHour: 10,            // デフォルト時間: 9時
+                minTime: "10:00",          // 最小時間: 9時
+                maxTime: "20:30",          // 最大時間: 17時
                 disable: [
                     // 日曜日を無効にする
                     function (date) {
@@ -25,11 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     },
                     // 休診日を無効にする
                     ...holidays,
-                    // 営業時間外を無効にする（12-14時の昼休み）
-                    function (date) {
-                        const hour = date.getHours();
-                        return hour >= 12 && hour < 14;
-                    }
                 ]
             });
         })
