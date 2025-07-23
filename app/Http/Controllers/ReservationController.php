@@ -32,27 +32,26 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'reservation_date' => 'required|date|after_or_equal:today',
-            'reservation_time' => 'required|in:09:00,10:00,11:00,14:00,15:00,16:00,17:00',
+            'reservation_datetime' => 'required|date|after_or_equal:today',
         ]);
 
-        $datetime = Carbon::parse($request->reservation_date . ' ' . $request->reservation_time);
+        $datetime = Carbon::parse($request->reservation_datetime);
 
         // 休診日チェック
-        $isHoliday = Holiday::where('holiday_date', $request->reservation_date)->exists();
+        $isHoliday = Holiday::where('holiday_date', $datetime->format('Y-m-d'))->exists();
         if ($isHoliday) {
-            return back()->withErrors(['reservation_date' => 'この日は休診日です。']);
+            return back()->withErrors(['reservation_datetime' => 'この日は休診日です。']);
         }
 
         // 日曜日チェック
         if ($datetime->isSunday()) {
-            return back()->withErrors(['reservation_date' => '日曜日は定休日です。']);
+            return back()->withErrors(['reservation_datetime' => '日曜日は定休日です。']);
         }
 
         // 重複チェック
         $existing = Reservation::where('reservation_datetime', $datetime)->first();
         if ($existing) {
-            return back()->withErrors(['reservation_time' => 'この時間は既に予約が入っています。']);
+            return back()->withErrors(['reservation_datetime' => 'この日時は既に予約が入っています。']);
         }
 
         Reservation::create([

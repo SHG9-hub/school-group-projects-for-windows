@@ -13,33 +13,13 @@
                         @csrf
 
 
-                        <!-- 予約日 -->
+                        <!-- 予約日時 -->
                         <div class="mb-6">
-                            <label for="reservation_date" class="block text-sm font-medium text-gray-700">予約日</label>
-                            <input type="text" name="reservation_date" id="reservation_date" value="{{ old('reservation_date') }}"
+                            <label for="reservation_datetime" class="block text-sm font-medium text-gray-700">予約日時</label>
+                            <input type="text" name="reservation_datetime" id="reservation_datetime" value="{{ old('reservation_datetime') }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                placeholder="日付を選択してください">
-                            <x-input-error :messages="$errors->get('reservation_date')" class="mt-2" />
-                        </div>
-
-                        <!-- 予約時間 -->
-                        <div class="mb-6">
-                            <label for="reservation_time" class="block text-sm font-medium text-gray-700">予約時間</label>
-                            <select name="reservation_time" id="reservation_time" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                                <option value="">時間を選択してください</option>
-                                <optgroup label="午前">
-                                    <option value="09:00" {{ old('reservation_time') == '09:00' ? 'selected' : '' }}>09:00</option>
-                                    <option value="10:00" {{ old('reservation_time') == '10:00' ? 'selected' : '' }}>10:00</option>
-                                    <option value="11:00" {{ old('reservation_time') == '11:00' ? 'selected' : '' }}>11:00</option>
-                                </optgroup>
-                                <optgroup label="午後">
-                                    <option value="14:00" {{ old('reservation_time') == '14:00' ? 'selected' : '' }}>14:00</option>
-                                    <option value="15:00" {{ old('reservation_time') == '15:00' ? 'selected' : '' }}>15:00</option>
-                                    <option value="16:00" {{ old('reservation_time') == '16:00' ? 'selected' : '' }}>16:00</option>
-                                    <option value="17:00" {{ old('reservation_time') == '17:00' ? 'selected' : '' }}>17:00</option>
-                                </optgroup>
-                            </select>
-                            <x-input-error :messages="$errors->get('reservation_time')" class="mt-2" />
+                                placeholder="日時を選択してください">
+                            <x-input-error :messages="$errors->get('reservation_datetime')" class="mt-2" />
                         </div>
 
                         <div class="flex items-center justify-end mt-6 space-x-4">
