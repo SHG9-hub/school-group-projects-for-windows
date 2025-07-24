@@ -78,7 +78,6 @@ class ReservationController extends Controller
     public function update(Request $request, Reservation $reservation)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
             'reservation_date' => 'required|date',
             'reservation_time' => 'required',
         ]);
@@ -93,7 +92,6 @@ class ReservationController extends Controller
         }
 
         $reservation->update([
-            'user_id' => $request->user_id,
             'reservation_datetime' => $datetime,
         ]);
 

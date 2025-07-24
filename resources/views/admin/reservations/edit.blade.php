@@ -22,25 +22,21 @@
                         @csrf
                         @method('PUT')
 
-                        <!-- 顧客選択 -->
+                        <!-- 顧客情報（変更不可） -->
                         <div class="mb-6">
-                            <label for="user_id" class="block text-sm font-medium text-gray-700">顧客</label>
-                            <select name="user_id" id="user_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id }}" {{ (old('user_id', $reservation->user_id) == $user->id) ? 'selected' : '' }}>
-                                        {{ $user->name }} ({{ $user->email }})
-                                    </option>
-                                @endforeach
-                            </select>
-                            <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
+                            <label class="block text-sm font-medium text-gray-700">顧客</label>
+                            <div class="mt-1 p-3 bg-gray-50 border border-gray-300 rounded-md">
+                                {{ $reservation->user->name }} ({{ $reservation->user->email }})
+                            </div>
                         </div>
 
                         <!-- 予約日 -->
                         <div class="mb-6">
                             <label for="reservation_date" class="block text-sm font-medium text-gray-700">予約日</label>
-                            <input type="date" name="reservation_date" id="reservation_date" 
+                            <input type="text" name="reservation_date" id="reservation_date" 
                                    value="{{ old('reservation_date', $reservation->reservation_datetime->format('Y-m-d')) }}" 
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                   placeholder="日付を選択してください">
                             <x-input-error :messages="$errors->get('reservation_date')" class="mt-2" />
                         </div>
 
@@ -48,17 +44,8 @@
                         <div class="mb-6">
                             <label for="reservation_time" class="block text-sm font-medium text-gray-700">予約時間</label>
                             <select name="reservation_time" id="reservation_time" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                                <optgroup label="午前">
-                                    <option value="09:00" {{ old('reservation_time', $reservation->reservation_datetime->format('H:i')) == '09:00' ? 'selected' : '' }}>09:00</option>
-                                    <option value="10:00" {{ old('reservation_time', $reservation->reservation_datetime->format('H:i')) == '10:00' ? 'selected' : '' }}>10:00</option>
-                                    <option value="11:00" {{ old('reservation_time', $reservation->reservation_datetime->format('H:i')) == '11:00' ? 'selected' : '' }}>11:00</option>
-                                </optgroup>
-                                <optgroup label="午後">
-                                    <option value="14:00" {{ old('reservation_time', $reservation->reservation_datetime->format('H:i')) == '14:00' ? 'selected' : '' }}>14:00</option>
-                                    <option value="15:00" {{ old('reservation_time', $reservation->reservation_datetime->format('H:i')) == '15:00' ? 'selected' : '' }}>15:00</option>
-                                    <option value="16:00" {{ old('reservation_time', $reservation->reservation_datetime->format('H:i')) == '16:00' ? 'selected' : '' }}>16:00</option>
-                                    <option value="17:00" {{ old('reservation_time', $reservation->reservation_datetime->format('H:i')) == '17:00' ? 'selected' : '' }}>17:00</option>
-                                </optgroup>
+                                <option value="">時間を選択してください</option>
+                                <!-- JavaScriptで動的生成 -->
                             </select>
                             <x-input-error :messages="$errors->get('reservation_time')" class="mt-2" />
                         </div>
@@ -76,4 +63,6 @@
             </div>
         </div>
     </div>
+
+    <script src="{{ asset('js/reservation-calendar.js') }}"></script>
 </x-admin-layout>

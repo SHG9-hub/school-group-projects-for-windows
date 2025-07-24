@@ -36,17 +36,7 @@
                             <label for="reservation_time" class="block text-sm font-medium text-gray-700">新しい予約時間</label>
                             <select name="reservation_time" id="reservation_time" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                                 <option value="">時間を選択してください</option>
-                                <optgroup label="午前">
-                                    <option value="09:00" {{ old('reservation_time', $reservation->reservation_datetime->format('H:i')) == '09:00' ? 'selected' : '' }}>09:00</option>
-                                    <option value="10:00" {{ old('reservation_time', $reservation->reservation_datetime->format('H:i')) == '10:00' ? 'selected' : '' }}>10:00</option>
-                                    <option value="11:00" {{ old('reservation_time', $reservation->reservation_datetime->format('H:i')) == '11:00' ? 'selected' : '' }}>11:00</option>
-                                </optgroup>
-                                <optgroup label="午後">
-                                    <option value="14:00" {{ old('reservation_time', $reservation->reservation_datetime->format('H:i')) == '14:00' ? 'selected' : '' }}>14:00</option>
-                                    <option value="15:00" {{ old('reservation_time', $reservation->reservation_datetime->format('H:i')) == '15:00' ? 'selected' : '' }}>15:00</option>
-                                    <option value="16:00" {{ old('reservation_time', $reservation->reservation_datetime->format('H:i')) == '16:00' ? 'selected' : '' }}>16:00</option>
-                                    <option value="17:00" {{ old('reservation_time', $reservation->reservation_datetime->format('H:i')) == '17:00' ? 'selected' : '' }}>17:00</option>
-                                </optgroup>
+                                <!-- JavaScriptで動的生成 -->
                             </select>
                             <x-input-error :messages="$errors->get('reservation_time')" class="mt-2" />
                         </div>

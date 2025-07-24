@@ -60,6 +60,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 初期状態で時間選択肢を設定
     updateTimeOptions(null, []);
+    
+    // 編集画面の場合、初期値で予約済み時間を取得
+    if (dateField && dateField.value) {
+        fetchReservedTimes(dateField.value);
+    }
 
     // 休診日データを取得してからFlatpickrを初期化
     fetch('/api/holidays')
