@@ -9,7 +9,17 @@
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form method="POST" action="{{ route('reservations.store') }}">
+                    @php
+                        $hasExistingReservation = auth()->user()->reservations()->count() > 0;
+                    @endphp
+                    
+                    @if($hasExistingReservation)
+                        <div class="mb-4 p-4 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded">
+                            <p>すでに予約があります。新しい予約をするには、<a href="{{ route('reservations.index') }}" class="underline text-blue-600">既存の予約</a>をキャンセルしてください。</p>
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('reservations.store') }}" @if($hasExistingReservation) style="display:none;" @endif>
                         @csrf
 
 
