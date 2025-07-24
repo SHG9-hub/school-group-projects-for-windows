@@ -55,6 +55,12 @@
                                                     @method('DELETE')
                                                     <button type="submit" class="text-red-600 hover:text-red-900">キャンセル</button>
                                                 </form>
+                                            @else
+                                                <form action="{{ route('reservations.destroy', $reservation) }}" method="POST" class="inline" onsubmit="return confirm('完了済み予約を削除しますか？')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-600 hover:text-red-900">削除</button>
+                                                </form>
                                             @endif
                                         </td>
                                     </tr>
