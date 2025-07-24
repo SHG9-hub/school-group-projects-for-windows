@@ -10,11 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
-    private const AVAILABLE_TIMES = [
-        '10:00', '10:30', '11:00', '11:30', '12:00',
-        '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30'
-    ];
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -38,7 +33,7 @@ class ReservationController extends Controller
     {
         $request->validate([
             'reservation_date' => 'required|date|after_or_equal:today',
-            'reservation_time' => 'required|in:' . implode(',', self::AVAILABLE_TIMES),
+            'reservation_time' => 'required|date_format:H:i',
         ]);
 
         $datetime = Carbon::parse($request->reservation_date . ' ' . $request->reservation_time);
@@ -104,7 +99,7 @@ class ReservationController extends Controller
 
         $request->validate([
             'reservation_date' => 'required|date|after_or_equal:today',
-            'reservation_time' => 'required|in:09:00,10:00,11:00,14:00,15:00,16:00,17:00',
+            'reservation_time' => 'required|date_format:H:i',
         ]);
 
         $datetime = Carbon::parse($request->reservation_date . ' ' . $request->reservation_time);

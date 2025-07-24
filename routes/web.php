@@ -100,4 +100,10 @@ Route::get('/api/holidays', function() {
         ->map(fn($date) => \Carbon\Carbon::parse($date)->format('Y-m-d'));
 });
 
+Route::get('/api/reservations/{date}', function($date) {
+    return \App\Models\Reservation::whereDate('reservation_datetime', $date)
+        ->pluck('reservation_datetime')
+        ->map(fn($datetime) => \Carbon\Carbon::parse($datetime)->format('H:i'));
+});
+
 require __DIR__.'/auth.php';

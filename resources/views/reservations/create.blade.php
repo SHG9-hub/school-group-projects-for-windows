@@ -27,19 +27,7 @@
                             <label for="reservation_time" class="block text-sm font-medium text-gray-700">予約時間</label>
                             <select name="reservation_time" id="reservation_time" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                                 <option value="">時間を選択してください</option>
-                                <option value="10:00" {{ old('reservation_time') == '10:00' ? 'selected' : '' }}>10:00</option>
-                                <option value="10:30" {{ old('reservation_time') == '10:30' ? 'selected' : '' }}>10:30</option>
-                                <option value="11:00" {{ old('reservation_time') == '11:00' ? 'selected' : '' }}>11:00</option>
-                                <option value="11:30" {{ old('reservation_time') == '11:30' ? 'selected' : '' }}>11:30</option>
-                                <option value="12:00" {{ old('reservation_time') == '12:00' ? 'selected' : '' }}>12:00</option>
-                                <option value="17:00" {{ old('reservation_time') == '17:00' ? 'selected' : '' }}>17:00</option>
-                                <option value="17:30" {{ old('reservation_time') == '17:30' ? 'selected' : '' }}>17:30</option>
-                                <option value="18:00" {{ old('reservation_time') == '18:00' ? 'selected' : '' }}>18:00</option>
-                                <option value="18:30" {{ old('reservation_time') == '18:30' ? 'selected' : '' }}>18:30</option>
-                                <option value="19:00" {{ old('reservation_time') == '19:00' ? 'selected' : '' }}>19:00</option>
-                                <option value="19:30" {{ old('reservation_time') == '19:30' ? 'selected' : '' }}>19:30</option>
-                                <option value="20:00" {{ old('reservation_time') == '20:00' ? 'selected' : '' }}>20:00</option>
-                                <option value="20:30" {{ old('reservation_time') == '20:30' ? 'selected' : '' }}>20:30</option>
+                                <!-- JavaScriptで動的生成 -->
                             </select>
                             <x-input-error :messages="$errors->get('reservation_time')" class="mt-2" />
                         </div>
