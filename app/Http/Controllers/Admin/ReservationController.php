@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Reservation;
 use App\Models\User;
+use App\Models\Holiday;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -44,10 +45,30 @@ class ReservationController extends Controller
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'reservation_datetime' => 'required|date|after_or_equal:today',
+            'reservation_date' => 'required|date|after_or_equal:today',
+            'reservation_time' => 'required|date_format:H:i',
         ]);
 
-        $datetime = Carbon::parse($request->reservation_datetime);
+        $datetime = Carbon::parse($request->reservation_date . ' ' . $request->reservation_time);
+
+        // 休診日チェック
+        $isHoliday = Holiday::where('holiday_date', $request->reservation_date)->exists();
+        if ($isHoliday) {
+            return back()->withErrors(['reservation_date' => 'この日は休診日です。']);
+        }
+
+        // 日曜日チェック
+        if ($datetime->isSunday()) {
+            return back()->withErrors(['reservation_date' => '日曜日は定休日です。']);
+        }
+
+        // 1件制限チェック
+        $userExistingReservation = Reservation::where('user_id', $request->user_id)->first();
+        if ($userExistingReservation) {
+            return back()
+                ->withErrors(['user_id' => 'この顧客は既に予約があります。既存の予約をキャンセルしてから新しい予約を作成してください。'])
+                ->withInput();
+        }
 
         $existing = Reservation::where('reservation_datetime', $datetime)->first();
         if ($existing) {
