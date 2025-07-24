@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
+    private const AVAILABLE_TIMES = [
+        '10:00', '10:30', '11:00', '11:30', '12:00',
+        '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30'
+    ];
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -32,26 +37,27 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'reservation_datetime' => 'required|date|after_or_equal:today',
+            'reservation_date' => 'required|date|after_or_equal:today',
+            'reservation_time' => 'required|in:' . implode(',', self::AVAILABLE_TIMES),
         ]);
 
-        $datetime = Carbon::parse($request->reservation_datetime);
+        $datetime = Carbon::parse($request->reservation_date . ' ' . $request->reservation_time);
 
         // 休診日チェック
         $isHoliday = Holiday::where('holiday_date', $datetime->format('Y-m-d'))->exists();
         if ($isHoliday) {
-            return back()->withErrors(['reservation_datetime' => 'この日は休診日です。']);
+            return back()->withErrors(['reservation_date' => 'この日は休診日です。']);
         }
 
         // 日曜日チェック
         if ($datetime->isSunday()) {
-            return back()->withErrors(['reservation_datetime' => '日曜日は定休日です。']);
+            return back()->withErrors(['reservation_date' => '日曜日は定休日です。']);
         }
 
         // 重複チェック
         $existing = Reservation::where('reservation_datetime', $datetime)->first();
         if ($existing) {
-            return back()->withErrors(['reservation_datetime' => 'この日時は既に予約が入っています。']);
+            return back()->withErrors(['reservation_time' => 'この時間は既に予約が入っています。']);
         }
 
         Reservation::create([
