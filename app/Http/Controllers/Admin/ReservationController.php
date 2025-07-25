@@ -24,8 +24,12 @@ class ReservationController extends Controller
             $query->whereDate('reservation_datetime', $request->date);
         }
 
-        if ($request->filled('user_id')) {
-            $query->where('user_id', $request->user_id);
+        if ($request->filled('user_query')) {
+            $userQuery = $request->user_query;
+            $query->whereHas('user', function($q) use ($userQuery) {
+                $q->where('name', 'like', '%' . $userQuery . '%')
+                  ->orWhere('email', 'like', '%' . $userQuery . '%');
+            });
         }
 
         $reservations = $query->orderBy('reservation_datetime', 'desc')->paginate(15);
