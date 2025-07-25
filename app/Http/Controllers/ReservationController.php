@@ -49,10 +49,12 @@ class ReservationController extends Controller
             return back()->withErrors(['reservation_date' => '日曜日は定休日です。']);
         }
 
-        // ユーザーの既存予約チェック（1件制限）
-        $userExistingReservation = Reservation::where('user_id', Auth::id())->first();
+        // ユーザーの未来の予約チェック（1件制限）
+        $userExistingReservation = Reservation::where('user_id', Auth::id())
+            ->where('reservation_datetime', '>', now())
+            ->first();
         if ($userExistingReservation) {
-            return back()->withErrors(['reservation_date' => 'すでに予約があります。新しい予約をするには既存の予約をキャンセルしてください。']);
+            return back()->withErrors(['reservation_date' => 'すでに未来の予約があります。新しい予約をするには既存の予約をキャンセルしてください。']);
         }
 
         // 重複チェック

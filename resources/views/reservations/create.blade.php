@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     @php
-                        $hasExistingReservation = auth()->user()->reservations()->count() > 0;
+                        $hasExistingReservation = auth()->user()->reservations()->where('reservation_datetime', '>', now())->count() > 0;
                     @endphp
                     
                     @if($hasExistingReservation)
