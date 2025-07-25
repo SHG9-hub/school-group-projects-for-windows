@@ -22,10 +22,15 @@
                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                         </div>
                         <div class="flex-1 min-w-0">
-                            <label for="user_name" class="block text-sm font-medium text-gray-700">顧客名</label>
-                            <input type="text" name="user_name" id="user_name" value="{{ request('user_name') }}" 
-                                   placeholder="顧客名で検索"
-                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <label for="user_id" class="block text-sm font-medium text-gray-700">顧客</label>
+                            <select name="user_id" id="user_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <option value="">すべての顧客</option>
+                                @foreach($users as $user)
+                                    <option value="{{ $user->id }}" {{ request('user_id') == $user->id ? 'selected' : '' }}>
+                                        {{ $user->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="flex items-end">
                             <button type="submit" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">

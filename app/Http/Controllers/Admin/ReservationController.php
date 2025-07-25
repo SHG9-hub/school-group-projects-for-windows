@@ -24,15 +24,14 @@ class ReservationController extends Controller
             $query->whereDate('reservation_datetime', $request->date);
         }
 
-        if ($request->filled('user_name')) {
-            $query->whereHas('user', function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->user_name . '%');
-            });
+        if ($request->filled('user_id')) {
+            $query->where('user_id', $request->user_id);
         }
 
         $reservations = $query->orderBy('reservation_datetime', 'desc')->paginate(15);
+        $users = User::orderBy('name')->get();
 
-        return view('admin.reservations.index', compact('reservations'));
+        return view('admin.reservations.index', compact('reservations', 'users'));
     }
 
     public function create()
