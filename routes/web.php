@@ -29,39 +29,33 @@ Route::get('/', function () {
 });
 
 // Static pages
-Route::get('/about', function () {
-    return view('pages.about');
-})->name('about');
-
-Route::get('/services', function () {
-    return view('pages.services');
-})->name('services');
-
-Route::get('/access', function () {
-    return view('pages.access');
-})->name('access');
-
-Route::get('/testimonials', function () {
-    return view('pages.testimonials');
-})->name('testimonials');
+Route::get('/', function () {
+    return view('pages.home');
+});
 
 Route::get('/faq', function () {
     return view('pages.faq');
-})->name('faq');
+});
 
-Route::get('/news', function () {
-    // 今後の休診日を取得（今日以降の日付）
-    $upcomingHolidays = \App\Models\Holiday::where('holiday_date', '>=', now()->toDateString())
-        ->orderBy('holiday_date', 'asc')
-        ->get();
-    
-    // 最近追加された休診日（過去30日以内に登録されたもの）
-    $recentHolidays = \App\Models\Holiday::where('created_at', '>=', now()->subDays(30))
-        ->orderBy('created_at', 'desc')
-        ->get();
-    
-    return view('pages.news', compact('upcomingHolidays', 'recentHolidays'));
-})->name('news');
+Route::get('/guide', function () {
+    return view('pages.guide');
+});
+
+Route::get('/recruit', function () {
+    return view('pages.recruit');
+});
+
+Route::get('/reservation', function () {
+    return view('pages.reservation');
+});
+
+Route::get('/staff', function () {
+    return view('pages.staff');
+});
+
+Route::get('/facility', function () {
+    return view('pages.facility');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
