@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(php artisan make:controller:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(diff:*)"
     ],
     "deny": []
   }
